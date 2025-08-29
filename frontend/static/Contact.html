@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Dealership</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
+    <div class="container-fluid">
+      <h2 style="padding-right: 5%;">Dealerships</h2>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" href="/about">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" style="font-size: larger; font-weight:bold;" href="/contact">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <div class="container mt-5 mb-5">
+    <div class="card shadow-lg p-4" style="max-width: 900px; margin:auto;">
+      <h1 class="text-center mb-4" style="color:darkturquoise;">Get in Touch</h1>
+      <p class="text-center">We’d love to hear from you! Whether you have a question, feedback, or want to book a test drive — reach out to us below.</p>
+
+      <div class="row mt-4">
+        <!-- Contact Info -->
+        <div class="col-md-5 border-end">
+          <h4 style="color:darkturquoise;">Contact Information</h4>
+          <p><strong>Address:</strong><br> 123 Car Street, Auto City, USA</p>
+          <p><strong>Email:</strong><br> support@bestcars.com</p>
+          <p><strong>Phone:</strong><br> +1 (555) 123-4567</p>
+          <p><strong>Working Hours:</strong><br> Mon - Sat: 9:00 AM – 6:00 PM</p>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-md-7">
+          <form>
+            <div class="mb-3">
+              <label for="name" class="form-label">Your Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter your name">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Your Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter your email">
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Your Message</label>
+              <textarea class="form-control" id="message" rows="4" placeholder="Write your message here..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" style="background-color:darkturquoise; border:none;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="/static/bootstrap.bundle.min.js"></script>
+</body>
+</html>
