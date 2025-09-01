@@ -17,17 +17,68 @@ def get_cars(request):
 
 
 # Login function
+# @csrf_exempt
+# def login_user(request):
+#     if request.method == "POST":
+#         username = request.POST.get("username")
+#         password = request.POST.get("password")
+#         user = authenticate(request, username=username, password=password)
+#         if user:
+#             login(request, user)
+#             return JsonResponse({"status": 200, "message": "Login successful"})
+#         else:
+#             return JsonResponse({"status": 401, "message": "Invalid credentials"})
+#     return JsonResponse({"status": 405, "message": "Method not allowed"})
+    
+# @csrf_exempt
+# def login_user(request):
+#     if request.method == "POST":
+#         try:
+#             if request.content_type == "application/json":
+#                 data = json.loads(request.body.decode("utf-8"))
+#                 username = data.get("username")
+#                 password = data.get("password")
+#             else:
+#                 username = request.POST.get("username")
+#                 password = request.POST.get("password")
+
+#             if not username or not password:
+#                 return JsonResponse({"status": 400, "message": "Missing credentials"})
+
+#             user = authenticate(request, username=username, password=password)
+#             if user:
+#                 login(request, user)
+#                 return JsonResponse({"status": 200, "message": "Login successful"})
+#             else:
+#                 return JsonResponse({"status": 401, "message": "Invalid credentials"})
+
+#         except Exception as e:
+#             return JsonResponse({"status": 500, "message": f"Server error: {str(e)}"})
+#     return JsonResponse({"status": 405, "message": "Method not allowed"})
+
 @csrf_exempt
 def login_user(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return JsonResponse({"status": 200, "message": "Login successful"})
-        else:
-            return JsonResponse({"status": 401, "message": "Invalid credentials"})
+        try:
+            if request.content_type == "application/json":
+                data = json.loads(request.body.decode("utf-8"))
+                username = data.get("username")
+                password = data.get("password")
+            else:
+                username = request.POST.get("username")
+                password = request.POST.get("password")
+
+            if not username or not password:
+                return JsonResponse({"status": 400, "message": "Missing credentials"})
+
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return JsonResponse({"status": 200, "message": "Login successful"})
+            else:
+                return JsonResponse({"status": 401, "message": "Invalid credentials"})
+        except Exception as e:
+            return JsonResponse({"status": 500, "message": str(e)})
     return JsonResponse({"status": 405, "message": "Method not allowed"})
 
 
@@ -92,3 +143,58 @@ def add_review(request):
             })
 
     return JsonResponse({"status": 405, "message": "Method not allowed"})
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+import json
+
+@csrf_exempt
+def register(request):
+    if request.method == "POST":
+        try:
+            # Parse JSON body
+            data = json.loads(request.body)
+
+            userName = data.get("userName")
+            password = data.get("password")
+            firstName = data.get("firstName")
+            lastName = data.get("lastName")
+            email = data.get("email")
+
+            # Validation (basic)
+            if not userName or not password:
+                return JsonResponse({"error": "Username and password are required"}, status=400)
+
+            if User.objects.filter(username=userName).exists():
+                return JsonResponse({"error": "Username already exists"}, status=400)
+
+            if User.objects.filter(email=email).exists():
+                return JsonResponse({"error": "Email already exists"}, status=400)
+
+            # Create user
+            user = User.objects.create_user(
+                username=userName,
+                password=password,
+                first_name=firstName,
+                last_name=lastName,
+                email=email
+            )
+
+            return JsonResponse({
+                "status": True,
+                "message": "User registered successfully",
+                "user": {
+                    "id": user.id,
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "email": user.email,
+                }
+            })
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+    return JsonResponse({"error": "Method Not Allowed"}, status=405)
+

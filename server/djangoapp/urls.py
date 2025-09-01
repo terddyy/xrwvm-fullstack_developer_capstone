@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 app_name = 'djangoapp'
 
 urlpatterns = [
-    path('login/', views.login_user, name='login'),
+    path('login', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('get_cars/', views.get_cars, name='get_cars'),
     path("api/add_review/", views.add_review, name="add_review"),
@@ -22,4 +22,8 @@ urlpatterns = [
 
     # Path for dealer reviews
     path('reviews/dealer/<int:dealer_id>', views.get_dealer_reviews, name='dealer_reviews'),
+
+    #path for register
+    path("register", views.register, name="register"),
+
 ]
